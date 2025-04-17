@@ -47,23 +47,36 @@ cd blender-drone-video-to-3d
 
 Or download the code as a ZIP file from GitHub by clicking the "Code" button and selecting "Download ZIP".
 
-### Installing Dependencies
-
-You can install the required Python dependencies using the included setup script:
-
-```bash
-python setup.py --install-deps
-```
-
 ### Building the Plugin
 
-To create a ZIP file of the plugin that can be installed in Blender:
+There are two ways to build the plugin:
+
+#### Option 1: Standard Build (Dependencies Need to be Installed Separately)
 
 ```bash
 python setup.py --package
 ```
 
-This will create a `drone_video_to_3d.zip` file that you can install in Blender.
+This will create a `drone_video_to_3d.zip` file. When you install this in Blender, you'll need to make sure all dependencies (pyproj, numpy, etc.) are installed in Blender's Python environment.
+
+#### Option 2: Bundled Build (Dependencies Included)
+
+```bash
+python setup.py --bundle
+```
+
+This creates a standalone ZIP with all dependencies bundled inside the plugin. This is the recommended method, as it avoids dependency issues with Blender's Python environment.
+
+### Troubleshooting Dependency Issues
+
+If you encounter `No module named 'pyproj'` or similar errors in Blender:
+
+1. Use the bundled build option above, which includes all dependencies
+2. Or, install dependencies directly into Blender's Python:
+
+```bash
+/path/to/blender/python/bin/python -m pip install pyproj numpy
+```
 
 ## Quick Start Guide
 
@@ -104,6 +117,13 @@ When a compatible NVIDIA GPU is available, the plugin can utilize CUDA for:
 - Faster image preprocessing
 - Accelerated feature extraction and matching
 - Improved dense reconstruction
+
+### Bundled Dependencies
+
+The plugin can be built with dependencies included, which simplifies installation and avoids dependency issues with Blender's Python environment. The bundled dependencies include:
+
+- pyproj (for GPS coordinate transformation)
+- numpy (for numerical computations)
 
 ## Contributing
 
