@@ -15,6 +15,12 @@ import importlib
 import sys
 import os
 
+# Add lib directory to path for bundled dependencies
+file_dir = os.path.dirname(os.path.abspath(__file__))
+lib_dir = os.path.join(file_dir, "lib")
+if os.path.exists(lib_dir) and lib_dir not in sys.path:
+    sys.path.insert(0, lib_dir)
+
 # Import the modules
 from . import ui
 from . import operators
