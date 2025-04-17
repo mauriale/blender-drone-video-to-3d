@@ -6,7 +6,7 @@ A Blender plugin that converts drone videos into georeferenced 3D models using G
 
 This plugin integrates video processing, GPS metadata extraction, and photogrammetry pipelines directly into Blender, allowing you to create accurate 3D models from drone footage with minimal effort. By leveraging the GPS data captured by most modern drones, the plugin can create properly scaled and georeferenced 3D reconstructions.
 
-![Plugin Interface Demo](https://via.placeholder.com/800x450.png?text=Drone+Video+to+3D+Interface)
+*Note: The UI screenshot will be added once the first version is released.*
 
 ## Key Features
 
@@ -36,6 +36,17 @@ This plugin integrates video processing, GPS metadata extraction, and photogramm
 3. Select the downloaded ZIP file and click "Install Add-on"
 4. Enable the add-on by checking the box next to "Drone Video to 3D"
 
+### Getting the Code
+
+You can clone this repository using git:
+
+```bash
+git clone https://github.com/mauriale/blender-drone-video-to-3d.git
+cd blender-drone-video-to-3d
+```
+
+Or download the code as a ZIP file from GitHub by clicking the "Code" button and selecting "Download ZIP".
+
 ### Installing Dependencies
 
 You can install the required Python dependencies using the included setup script:
@@ -43,6 +54,16 @@ You can install the required Python dependencies using the included setup script
 ```bash
 python setup.py --install-deps
 ```
+
+### Building the Plugin
+
+To create a ZIP file of the plugin that can be installed in Blender:
+
+```bash
+python setup.py --package
+```
+
+This will create a `drone_video_to_3d.zip` file that you can install in Blender.
 
 ## Quick Start Guide
 
