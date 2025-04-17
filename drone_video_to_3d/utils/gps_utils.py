@@ -1,8 +1,15 @@
-import pyproj
 import json
 import csv
 import os
 import numpy as np
+
+# First try to import from bundled libraries
+try:
+    import pyproj
+except ImportError:
+    # If not available, use a simple fallback for coordinate conversion
+    print("Warning: pyproj module not found. Using simplified coordinate conversion.")
+    pyproj = None
 
 def extract_gps_metadata(exiftool_output):
     """Extract GPS metadata from ExifTool JSON output"""
@@ -48,12 +55,30 @@ def extract_gps_metadata(exiftool_output):
 def convert_to_cartesian(lat, lon, alt):
     """Convert GPS coordinates to cartesian coordinates"""
     try:
-        # Create transformer from WGS84 to ECEF (Earth-Centered, Earth-Fixed)
-        transformer = pyproj.Transformer.from_crs("EPSG:4326", "EPSG:4978")
-        
-        # Transform coordinates
-        x, y, z = transformer.transform(lat, lon, alt)
-        return (x, y, z)
+        if pyproj is not None:
+            # Use pyproj if available
+            # Create transformer from WGS84 to ECEF (Earth-Centered, Earth-Fixed)
+            transformer = pyproj.Transformer.from_crs("EPSG:4326", "EPSG:4978")
+            
+            # Transform coordinates
+            x, y, z = transformer.transform(lat, lon, alt)
+            return (x, y, z)
+        else:
+            # Simplified conversion if pyproj is not available
+            # This is a basic approximation assuming a spherical Earth
+            # More accurate conversion requires the proper library
+            earth_radius = 6378137.0  # Earth radius in meters
+            
+            # Convert degrees to radians
+            lat_rad = lat * (3.14159265359 / 180.0)
+            lon_rad = lon * (3.14159265359 / 180.0)
+            
+            # Calculate cartesian coordinates
+            x = (earth_radius + alt) * np.cos(lat_rad) * np.cos(lon_rad)
+            y = (earth_radius + alt) * np.cos(lat_rad) * np.sin(lon_rad)
+            z = (earth_radius + alt) * np.sin(lat_rad)
+            
+            return (x, y, z)
     except Exception as e:
         print(f"Error converting coordinates: {str(e)}")
         return (0.0, 0.0, 0.0)
