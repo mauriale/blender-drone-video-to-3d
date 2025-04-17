@@ -1,0 +1,31 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Blender backups
+*.blend1
+*.blend2
+
+# Output directories
+output/
+frames/
+temp/
+
+# Environment
+venv/
+env/
+.env/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS specific
+.DS_Store
+Thumbs.db
